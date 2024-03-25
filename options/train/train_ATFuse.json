@@ -1,0 +1,72 @@
+{
+    "mode": "fu",
+    "gpu_ids": [0],
+    "scale": 4,
+    "is_train": true,
+    "rgb_range": 2047,
+    "save_image": true,
+
+    "datasets": {
+        "train": {
+            "mode": "IrVi",
+            "dataroot_Vi": "./dataset/train/vi",
+            "dataroot_Ir": "./dataset/train/ir",
+            "data_type": "png",
+            "n_workers": 4,
+            "batch_size": 16,
+            "LR_size": 64,
+            "use_flip": true,
+            "use_rot": true,
+            "noise": ".",
+            "useContinueLearning": false,
+            "shift_pace": 16
+        },
+        "val": {
+            "mode": "IrVi",
+            "dataroot_Vi": "./dataset/val/vi",
+            "dataroot_Ir": "./dataset/val/ir",
+            "data_type": "png",
+            "useContinueLearning": false,
+            "shift_pace": 16
+        }
+    },
+
+    "networks": {
+        "which_model": "ATFuse",
+        "in_channels": 1,
+        "out_channels": 1,
+        "img_size": 4,
+        "num_heads": 4,
+        "n_feats": 256,
+        "linear_dim": 256,
+
+        "num_stage": 4,
+        "embed_dims": [64, 64, 256, 512],
+        "num_paths": [4, 1, 3, 3],
+        "mlp_ratio": 3,
+        "use_aggregate": true,
+        "feature_sum": true
+    },
+
+    "solver": {
+        "type": "ADAMW",
+        "learning_rate": 0.0001,
+        "weight_decay": 0,
+        "lr_scheme": "MultiStepLR",
+        "lr_steps": [50,100,200,400],
+        "lr_gamma": 0.5,
+        "loss_type": "loss",
+        "q": "vi",
+        "spatial_loss": true,
+        "PerceptualLoss": true,
+        "manual_seed": 0,
+        "num_epochs": 2000,
+        "skip_threshold": 4,
+        "split_batch": 1,
+        "save_ckp_step": 50,
+        "save_vis_step": 50,
+        "pretrain": null,
+        "pretrained_path": "./experiments/HYP_in4_x4/epochs/last_ckp.pth",
+        "cl_weights": [0.1, 0.1, 0.4, 0.4]
+    }
+}

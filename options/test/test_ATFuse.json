@@ -1,0 +1,48 @@
+{
+    "mode": "fu",
+    "use_cl": false,
+    "gpu_ids": [0],
+
+    "scale": 4,
+    "degradation": "BI",
+    "is_train": false,
+    "use_chop": false,
+    "rgb_range": 2047,
+    "self_ensemble": false,
+
+
+
+    "datasets": {
+        "test_set1": {
+            "mode": "IrVi",
+            "dataroot_Vi": "./dataset/train/vi",
+            "dataroot_Ir": "./dataset/train/ir",
+            "data_type": "png",
+            "useContinueLearning": false,
+            "shift_pace": 36
+
+        }
+    },
+
+    "networks": {
+         "which_model": "ATFuse",
+        "in_channels": 1,
+        "out_channels": 1,
+        "img_size": 4,
+        "num_heads": 4,
+        "n_feats": 256,
+        "linear_dim": 256,
+
+        "num_stage": 4,
+        "embed_dims": [64, 64, 256, 512],
+        "num_paths": [4, 1, 3, 3],
+        "mlp_ratio": 3,
+        "use_aggregate": true,
+        "feature_sum": true
+    },
+
+    "solver": {
+        "q": "vi",
+        "pretrained_path": "./model/best_ckp.pth"
+    }
+}
